@@ -840,7 +840,15 @@ function App() {
             <span>Números restantes</span>
           </article>
         </div>
-
+<div className="qr-card">
+    <h3>📲 Escanea para registrar tu compra</h3>
+      <img
+        src={`$
+          {import.meta.env.BASE_URL}qr.png`}
+          alt="Código QR"
+            className="qr-image"
+            />
+                    </div>
         <div className="actions">
           <a className="primary" href="#register">
             Registrar cliente
