@@ -639,3 +639,21 @@ h1 span {
     margin-top: 12px;
   }
 }
+.qr-card{
+    margin:30px auto;
+      text-align:center;
+      }
+
+      .qr-card h3{
+        color:#f4b942;
+          margin-bottom:15px;
+          }
+
+          .qr-image{
+            width:220px;
+              max-width:90%;
+                background:#fff;
+                  padding:10px;
+                    border-radius:12px;
+                    }
+}
