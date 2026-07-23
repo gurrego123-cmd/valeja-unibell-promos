@@ -843,8 +843,7 @@ function App() {
 <div className="qr-card">
     <h3>📲 Escanea para registrar tu compra</h3>
       <img
-        src={`$
-          {import.meta.env.BASE_URL}qr.png`}
+        src="/valeja-unibell-promos/qr.png"
           alt="Código QR"
             className="qr-image"
             />
