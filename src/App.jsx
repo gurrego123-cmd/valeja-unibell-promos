@@ -802,17 +802,15 @@ function App() {
       <section className="hero">
         <div className="logos">
             <div className="logo-card logo-card-dark">
-                <img
-                      src={`${import.meta.env.BASE_URL}valeja.jpg`}
-                            alt="Logo VALEJA Café Bar"
-                                />
-                                  </div>
-
-                                    <div className="logo-card logo-card-light">
-                                        <img
-                                              src={`${import.meta.env.BASE_URL}unibell.jpg`}
-                                                    alt="Logo UNIBELL"
-                                                        />
+      <img
+        src={`${import.meta.env.BASE_URL}valeja.png`}
+          alt="Logo VALEJA Café Bar"
+          />
+          
+          <img
+            src={`${import.meta.env.BASE_URL}unibell.png`}
+              alt="Logo UNIBELL"
+              />
                                                           </div>
                                                           </div>
 
