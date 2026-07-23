@@ -624,31 +624,29 @@ h1 span {
     border: 0;
   }
 
-  .records-table td::before {
+.records-table td::before {
     content: attr(data-label);
-    display: block;
-    margin-bottom: 4px;
-    color: #f8d17a;
-    font-size: 0.76rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06rem;
-  }
+      display: block;
+        margin-bottom: 4px;
+          color: #f8d17a;
+            font-size: 0.76rem;
+              font-weight: 800;
+                text-transform: uppercase;
+                  letter-spacing: 0.06rem;
+                  }
 
   .actions-cell {
     margin-top: 12px;
   }
-}
 .qr-card{
     margin:30px auto;
       text-align:center;
       }
 
       .qr-card h3{
-        color:#f4b942;
+        color: #f4b942;
           margin-bottom:15px;
           }
-
           .qr-image{
             width:220px;
               max-width:90%;
@@ -656,4 +654,3 @@ h1 span {
                   padding:10px;
                     border-radius:12px;
                     }
-}
