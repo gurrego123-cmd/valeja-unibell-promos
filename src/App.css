@@ -654,3 +654,56 @@ h1 span {
                   padding:10px;
                     border-radius:12px;
                     }
+                    .logos {
+                        width: 100%;
+                          display: grid;
+                            grid-template-columns: 1fr 1fr;
+                              gap: 10px;
+                                align-items: stretch;
+                                }
+
+                                .logo-card {
+                                  min-width: 0;
+                                    height: 260px;
+                                      padding: 10px;
+                                        border-radius: 22px;
+                                          overflow: hidden;
+                                            display: flex;
+                                              align-items: center;
+                                                justify-content: center;
+                                                }
+
+                                                .logo-card img {
+                                                  width: 100%;
+                                                    height: 100%;
+                                                      max-width: 100%;
+                                                        object-fit: contain;
+                                                          object-position: center;
+                                                            display: block;
+                                                            }
+
+                                                            .logo-card-dark {
+                                                              background: #000;
+                                                              }
+
+                                                              .logo-card-light {
+                                                                background: #fff;
+                                                                }
+
+                                                                @media (max-width: 650px) {
+                                                                  .logos {
+                                                                      grid-template-columns: 1fr 1fr;
+                                                                          gap: 8px;
+                                                                            }
+
+                                                                              .logo-card {
+                                                                                  height: 210px;
+                                                                                      padding: 6px;
+                                                                                          border-radius: 18px;
+                                                                                            }
+
+                                                                                              .logo-card img {
+                                                                                                  object-fit: contain;
+                                                                                                    }
+                                                                                                    }
+                    }
