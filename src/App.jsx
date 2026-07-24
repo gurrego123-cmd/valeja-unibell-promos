@@ -984,7 +984,22 @@ function App() {
 
       {showLookup ? (
         <div className="lookup-modal" role="dialog" aria-modal="true">
-          <div className="lookup-card">
+      <div
+        className="lookup-card"
+          style={{
+              width: '90%',
+                  maxWidth: '520px',
+                      maxHeight: '90vh',
+                          overflowY: 'auto',
+                              padding: '24px',
+                                  borderRadius: '20px',
+                                      border: '1px solid #e7ae30',
+                                          background: '#111111',
+                                              color: '#ffffff',
+                                                  position: 'relative',
+                                                      zIndex: 9999,
+                                                        }}
+                                                        >
             <div className="lookup-header">
               <h3>Consultar número</h3>
               <button type="button" className="close-button" onClick={() => setShowLookup(false)}>
