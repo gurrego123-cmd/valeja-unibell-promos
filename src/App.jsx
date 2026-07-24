@@ -997,6 +997,9 @@ function App() {
                                           background: '#111111',
                                               color: '#ffffff',
                                                   position: 'relative',
+              display: 'block',
+              visibility: 'visible',
+              opacity: 1,
                                                       zIndex: 9999,
                                                         }}
                                                         >
