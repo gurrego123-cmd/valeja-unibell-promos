@@ -412,39 +412,41 @@ function App() {
     const raffleNumber = availableNumbers[raffleIndex]
 
     const newRecord = {
-      ...validated.record,
-      assignedNumber: raffleNumber,
-      createdAt: serverTimestamp(),
-    }
+        ...validated.record,
+          assignedNumber: raffleNumber,
+            createdAt: serverTimestamp(),
+            }
 
-    if (!isFirestoreEnabled || !recordsCollection) {
-      setFeedback({
-        type: 'error',
-        message: 'Firestore no está habilitado. Configura tu archivo .env para continuar.',
-      })
-      return
-    }
+            if (!isFirestoreEnabled || !recordsCollection) {
+              setFeedback({
+                  type: 'error',
+                      message: 'Firestore no está habilitado.',
+                        })
+                          return
+                          }
 
-    try {
-      await addDoc(recordsCollection, newRecord)
-      setAssignedNumber(raffleNumber)
-      setFeedback({
-        type: 'success',
-        message: `Registro exitoso. El cliente recibió el número ${raffleNumber}.`,
-      })
-      setFormData(initialForm)
-    } catch (error) {
-      console.error(error)
-      setFeedback({
-        type: 'error',
-        message: error?.message || 'No se pudo guardar el registro en Firestore.',
-      })
-    }
-  }
+                          try {
+                            await addDoc(recordsCollection, newRecord)
+                              setAssignedNumber(raffleNumber)
 
-  const handleLookup = (event) => {
+                                setFeedback({
+                                    type: 'success',
+                                        message: 'Registro exitoso. El cliente recibió el número asignado.',
+                                          })
+
+                                            setFormData(initialForm)
+                                            } catch (error) {
+                                              console.error(error)
+
+                                                setFeedback({
+                                                    type: 'error',
+                                                        message: error?.message || 'No se pudo guardar el registro.',
+                                                          })
+                                                          }
+
+                                                          const handleLookup = (event) => {
+    }
     event.preventDefault()
-
     const normalizedLookupValue = normalizeText(lookupValue)
 
     if (!normalizedLookupValue) {
