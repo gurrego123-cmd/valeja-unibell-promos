@@ -73,6 +73,7 @@ function App() {
   const [formData, setFormData] = useState(initialForm)
   const [records, setRecords] = useState([])
   const [assignedNumber, setAssignedNumber] = useState(null)
+  const [assignedPhone, setAssignedPhone] = useState('')
   const [feedback, setFeedback] = useState({ type: 'info', message: '' })
   const [showLookup, setShowLookup] = useState(false)
   const [lookupType, setLookupType] = useState('idNumber')
@@ -428,6 +429,7 @@ function App() {
                           try {
                             await addDoc(recordsCollection, newRecord)
                               setAssignedNumber(raffleNumber)
+setAssignedPhone(formData.phone)
 
                                 setFeedback({
                                     type: 'success',
@@ -978,6 +980,19 @@ function App() {
                 <strong>{assignedNumber}</strong>
               </div>
             ) : null}
+            {assignedNumber ? (
+                <div style={{ marginTop: '16px', textAlign: 'center' }}>
+                    <a
+                          className="primary"
+                                href={`https://wa.me/${assignedPhone.startsWith('57') ? assignedPhone : `57${assignedPhone}`}`}
+                                      target="_blank"
+                                            rel="noopener noreferrer"
+                                                >
+                                                      Enviar por WhatsApp
+                                                          </a>
+                                                            </div>
+                                                            ) : null}
+            
           </div>
         </form>
       </section>
