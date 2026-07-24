@@ -75,7 +75,6 @@ function App() {
   const [assignedNumber, setAssignedNumber] = useState(null)
   const [assignedPhone, setAssignedPhone] = useState('')
   const [feedback, setFeedback] = useState({ type: 'info', message: '' })
-  const [lookupFeedback, setLookupFeedback] = useState({ type: 'info', message: '' })
   const [showLookup, setShowLookup] = useState(false)
   const [lookupType, setLookupType] = useState('idNumber')
   const [lookupValue, setLookupValue] = useState('')
@@ -447,14 +446,14 @@ setAssignedPhone(formData.phone)
                                                           })
                                                           }
 
-         const handleLookup = (event) => {
+                                                          const handleLookup = (event) => {
     }
     event.preventDefault()
     const normalizedLookupValue = normalizeText(lookupValue)
 
     if (!normalizedLookupValue) {
       setLookupResult(null)
-      setLookupFeedback({
+      setFeedback({
         type: 'error',
         message: 'Ingrese un valor para consultar el número asignado.',
       })
@@ -480,7 +479,7 @@ setAssignedPhone(formData.phone)
 
     if (!foundRecord) {
       setLookupResult(null)
-      setLookupFeedback({
+      setFeedback({
         type: 'error',
         message: 'No se encontró ningún registro con la información consultada.',
       })
@@ -488,7 +487,7 @@ setAssignedPhone(formData.phone)
     }
 
     setLookupResult(foundRecord)
-    setLookupFeedback({
+    setFeedback({
       type: 'success',
       message: 'Consulta realizada correctamente.',
     })
@@ -985,14 +984,7 @@ setAssignedPhone(formData.phone)
                 <div style={{ marginTop: '16px', textAlign: 'center' }}>
                     <a
                           className="primary"
-                    href={`https://wa.me/${
-                        assignedPhone.startsWith('57')
-                            ? assignedPhone
-                                : `57${assignedPhone}`
-                                }?text=${encodeURIComponent(
-                                  `Hola. Tu registro fue exitoso en la promoción VALEJA + UniBell. Tu número asignado para el sorteo es el ${String(assignedNumber).padStart(3, '0')}. ¡Mucha suerte!`
-                                  )}`}
-
+                                href={`https://wa.me/${assignedPhone.startsWith('57') ? assignedPhone : `57${assignedPhone}`}`}
                                       target="_blank"
                                             rel="noopener noreferrer"
                                                 >
@@ -1039,16 +1031,10 @@ setAssignedPhone(formData.phone)
               <button className="primary" type="submit">
                 Buscar
               </button>
-  </form>
+            </form>
 
-  {lookupFeedback.message ? (
-    <div className={`feedback ${lookupFeedback.type}`}>
-        {lookupFeedback.message}
-          </div>
-          ) : null}
-
-          {lookupResult ? (
-            <div className="lookup-result">
+            {lookupResult ? (
+              <div className="lookup-result">
                 <h4>Resultado encontrado</h4>
                 <ul>
                   <li><strong>Nombre completo:</strong> {lookupResult.fullName}</li>
