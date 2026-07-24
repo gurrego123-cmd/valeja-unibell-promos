@@ -982,80 +982,106 @@ function App() {
         </form>
       </section>
 
-      {showLookup ? (
-        <div className="lookup-modal" role="dialog" aria-modal="true">
-      <div
-        className="lookup-card"
-          style={{
-              width: '90%',
-                  maxWidth: '520px',
-                      maxHeight: '90vh',
-                          overflowY: 'auto',
-                              padding: '24px',
-                                  borderRadius: '20px',
-                                      border: '1px solid #e7ae30',
-                                          background: '#111111',
-                                              color: '#ffffff',
-                                                  position: 'relative',
-              display: 'block',
-              visibility: 'visible',
-              opacity: 1,
-                                                      zIndex: 9999,
-                                                        }}
-                                                        >
-            <div className="lookup-header">
-              <h3>Consultar número</h3>
-              <button type="button" className="close-button" onClick={() => setShowLookup(false)}>
-                ×
-              </button>
-            </div>
+      
+      
+{showLookup ? (
+  <div
+    role="dialog"
+    aria-modal="true"
+    style={{
+      position: 'fixed',
+      inset: 0,
+      zIndex: 99999,
+      background: 'rgba(0,0,0,0.85)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px',
+    }}
+  >
+    <div
+      style={{
+        width: '100%',
+        maxWidth: '520px',
+        maxHeight: '90vh',
+        overflowY: 'auto',
+        background: '#111',
+        color: '#fff',
+        border: '2px solid #e7ae30',
+        borderRadius: '20px',
+        padding: '24px',
+        boxSizing: 'border-box',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3>Consultar número</h3>
+        <button
+          type="button"
+          onClick={() => {
+            setShowLookup(false)
+            setLookupResult(null)
+            setLookupFeedback({ type: 'info', message: '' })
+          }}
+        >
+          ×
+        </button>
+      </div>
 
-            <form className="lookup-form" onSubmit={handleLookup}>
-              <label className="field">
-                <span>Buscar por</span>
-                <select value={lookupType} onChange={(event) => setLookupType(event.target.value)}>
-                  <option value="idNumber">Número de identificación</option>
-                  <option value="invoiceNumber">Número de factura</option>
-                  <option value="assignedNumber">Número asignado</option>
-                </select>
-              </label>
+      <form onSubmit={handleLookup} style={{ display: 'grid', gap: '16px' }}>
+        <label>
+          <span>Buscar por</span>
+          <select
+            value={lookupType}
+            onChange={(event) => {
+              setLookupType(event.target.value)
+              setLookupValue('')
+              setLookupResult(null)
+              setLookupFeedback({ type: 'info', message: '' })
+            }}
+          >
+            <option value="idNumber">Número de identificación</option>
+            <option value="invoiceNumber">Número de factura</option>
+            <option value="assignedNumber">Número asignado</option>
+          </select>
+        </label>
 
-              <label className="field">
-                <span>Valor a consultar</span>
-                <input
-                  type="text"
-                  value={lookupValue}
-                  onChange={(event) => setLookupValue(event.target.value)}
-                  placeholder="Ingrese la información"
-                  required
-                />
-              </label>
+        <label>
+          <span>Valor a consultar</span>
+          <input
+            type="text"
+            value={lookupValue}
+            onChange={(event) => setLookupValue(event.target.value)}
+            placeholder="Ingrese la información"
+            required
+          />
+        </label>
 
-              <button className="primary" type="submit">
-                Buscar
-              </button>
-            </form>
+        <button className="primary" type="submit">
+          Buscar
+        </button>
+      </form>
 
-            {lookupResult ? (
-              <div className="lookup-result">
-                <h4>Resultado encontrado</h4>
-                <ul>
-                  <li><strong>Nombre completo:</strong> {lookupResult.fullName}</li>
-                  <li><strong>Identificación:</strong> {lookupResult.idNumber}</li>
-                  <li><strong>Teléfono:</strong> {lookupResult.phone}</li>
-                  <li><strong>Correo:</strong> {lookupResult.email || 'No registrado'}</li>
-                  <li><strong>Negocio:</strong> {lookupResult.business}</li>
-                  <li><strong>Factura:</strong> {lookupResult.invoiceNumber}</li>
-                  <li><strong>Valor de compra:</strong> {lookupResult.purchaseValue.toLocaleString('es-CO')} COP</li>
-                  <li><strong>Número asignado:</strong> {lookupResult.assignedNumber}</li>
-                </ul>
-              </div>
-            ) : null}
-          </div>
+      {lookupFeedback.message ? (
+        <div className={`feedback ${lookupFeedback.type}`}>
+          {lookupFeedback.message}
         </div>
       ) : null}
 
-      {showAdminLogin ? (
+      {lookupResult ? (
+        <div className="lookup-result">
+          <h4>Resultado encontrado</h4>
+          <p><strong>Nombre:</strong> {lookupResult.fullName || 'No disponible'}</p>
+          <p><strong>Identificación:</strong> {lookupResult.idNumber || 'No disponible'}</p>
+          <p><strong>Teléfono:</strong> {lookupResult.phone || 'No disponible'}</p>
+          <p><strong>Factura:</strong> {lookupResult.invoiceNumber || 'No disponible'}</p>
+          <p><strong>Número asignado:</strong> {lookupResult.assignedNumber || 'No disponible'}</p>
+        </div>
+      ) : null}
+    </div>
+  </div>
+) : null}
+
+{showAdminLogin ? (
         <div className="lookup-modal" role="dialog" aria-modal="true">
           <div className="lookup-card">
             <div className="lookup-header">
