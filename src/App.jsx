@@ -491,6 +491,45 @@ function App() {
     })
   }
 
+  const sendLookupResultToWhatsApp = () => {
+    if (!lookupResult) {
+      return
+    }
+
+    const rawPhone = String(lookupResult.phone || '').replace(/\D/g, '')
+    const whatsappPhone =
+      rawPhone.startsWith('57')
+        ? rawPhone
+        : rawPhone.length === 10
+          ? `57${rawPhone}`
+          : rawPhone
+
+    if (!whatsappPhone) {
+      setFeedback({
+        type: 'error',
+        message: 'El cliente no tiene un número de celular válido registrado.',
+      })
+      return
+    }
+
+    const message = [
+      'Hola,',
+      '',
+      `Tu número asignado para la promoción VALEJA × UNIBELL es: ${lookupResult.assignedNumber || 'No disponible'}`,
+      `Nombre: ${lookupResult.fullName || 'No disponible'}`,
+      `Cédula: ${lookupResult.idNumber || 'No disponible'}`,
+      `Factura: ${lookupResult.invoiceNumber || 'No disponible'}`,
+      '',
+      '¡Gracias por participar!',
+    ].join('\n')
+
+    window.open(
+      `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer',
+    )
+  }
+
   const handleAdminLogin = async (event) => {
     event.preventDefault()
 
@@ -1141,6 +1180,23 @@ function App() {
                   <strong>Número asignado:</strong>{" "}
                   {lookupResult.assignedNumber || "No disponible"}
                 </p>
+                <button
+                  type="button"
+                  onClick={sendLookupResultToWhatsApp}
+                  style={{
+                    width: "100%",
+                    marginTop: "12px",
+                    padding: "14px",
+                    border: "none",
+                    borderRadius: "12px",
+                    background: "#25D366",
+                    color: "#ffffff",
+                    fontWeight: 800,
+                    cursor: "pointer",
+                  }}
+                >
+                  Enviar resultado por WhatsApp
+                </button>
               </div>
             ) : null}
           </div>
