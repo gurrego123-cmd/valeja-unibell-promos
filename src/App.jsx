@@ -73,6 +73,8 @@ function App() {
   const [formData, setFormData] = useState(initialForm)
   const [records, setRecords] = useState([])
   const [assignedNumber, setAssignedNumber] = useState(null)
+  const [assignedPhone, setAssignedPhone] = useState('')
+  const [assignedClientName, setAssignedClientName] = useState('')
   const [feedback, setFeedback] = useState({ type: 'info', message: '' })
   const [showLookup, setShowLookup] = useState(false)
   const [lookupType, setLookupType] = useState('idNumber')
@@ -428,6 +430,8 @@ function App() {
                           try {
                             await addDoc(recordsCollection, newRecord)
                               setAssignedNumber(raffleNumber)
+                              setAssignedPhone(validated.record.phone)
+                              setAssignedClientName(validated.record.fullName)
 
                                 setFeedback({
                                     type: 'success',
@@ -489,6 +493,38 @@ function App() {
       type: 'success',
       message: 'Consulta realizada correctamente.',
     })
+  }
+
+  const sendAssignedNumberToWhatsApp = () => {
+    const rawPhone = String(assignedPhone || '').replace(/\D/g, '')
+    const whatsappPhone =
+      rawPhone.startsWith('57')
+        ? rawPhone
+        : rawPhone.length === 10
+          ? `57${rawPhone}`
+          : rawPhone
+
+    if (!whatsappPhone || !assignedNumber) {
+      setFeedback({
+        type: 'error',
+        message: 'No hay un teléfono o número asignado disponible para enviar.',
+      })
+      return
+    }
+
+    const message = [
+      `Hola ${assignedClientName || ''},`,
+      '',
+      `Tu número asignado para la promoción VALEJA × UNIBELL es: ${assignedNumber}`,
+      '',
+      '¡Gracias por participar!',
+    ].join('\n')
+
+    window.open(
+      `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer',
+    )
   }
 
   const sendLookupResultToWhatsApp = () => {
@@ -1015,6 +1051,23 @@ function App() {
               <div className="assigned-card" aria-live="polite">
                 <span>Número asignado</span>
                 <strong>{assignedNumber}</strong>
+                <button
+                  type="button"
+                  onClick={sendAssignedNumberToWhatsApp}
+                  style={{
+                    width: "100%",
+                    marginTop: "12px",
+                    padding: "12px",
+                    border: "none",
+                    borderRadius: "10px",
+                    background: "#25D366",
+                    color: "#ffffff",
+                    fontWeight: 800,
+                    cursor: "pointer",
+                  }}
+                >
+                  Enviar número por WhatsApp
+                </button>
               </div>
             ) : null}
           </div>
