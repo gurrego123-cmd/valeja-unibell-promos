@@ -985,26 +985,75 @@ function App() {
       
       
 {showLookup ? (
-        <section className="lookup-inline">
-          <div className="lookup-inline-card">
-            <div className="lookup-header">
-              <h3>Consultar número asignado</h3>
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 999999,
+            background: "rgba(0,0,0,0.88)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "20px",
+            boxSizing: "border-box",
+            overflowY: "auto",
+          }}
+        >
+          <div
+            style={{
+              display: "block",
+              width: "100%",
+              maxWidth: "520px",
+              padding: "24px",
+              boxSizing: "border-box",
+              borderRadius: "20px",
+              border: "2px solid #e7ae30",
+              background: "#111111",
+              color: "#ffffff",
+              opacity: 1,
+              visibility: "visible",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "12px",
+                marginBottom: "20px",
+              }}
+            >
+              <h3 style={{ margin: 0, color: "#ffffff" }}>
+                Consultar número asignado
+              </h3>
+
               <button
                 type="button"
-                className="close-button"
                 onClick={() => {
                   setShowLookup(false)
                   setLookupResult(null)
                   setFeedback({ type: "info", message: "" })
+                }}
+                style={{
+                  padding: "8px 12px",
+                  border: "1px solid #e7ae30",
+                  borderRadius: "10px",
+                  background: "transparent",
+                  color: "#ffffff",
                 }}
               >
                 Cerrar
               </button>
             </div>
 
-            <form className="lookup-form" onSubmit={handleLookup}>
-              <label className="field">
-                <span>Buscar por</span>
+            <form
+              onSubmit={handleLookup}
+              style={{ display: "grid", gap: "16px" }}
+            >
+              <label style={{ display: "grid", gap: "8px" }}>
+                <span style={{ color: "#ffffff" }}>Buscar por</span>
                 <select
                   value={lookupType}
                   onChange={(event) => {
@@ -1013,6 +1062,14 @@ function App() {
                     setLookupResult(null)
                     setFeedback({ type: "info", message: "" })
                   }}
+                  style={{
+                    width: "100%",
+                    padding: "13px",
+                    borderRadius: "10px",
+                    border: "1px solid #e7ae30",
+                    background: "#ffffff",
+                    color: "#111111",
+                  }}
                 >
                   <option value="idNumber">Número de cédula</option>
                   <option value="invoiceNumber">Número de factura</option>
@@ -1020,14 +1077,23 @@ function App() {
                 </select>
               </label>
 
-              <label className="field">
-                <span>Valor a consultar</span>
+              <label style={{ display: "grid", gap: "8px" }}>
+                <span style={{ color: "#ffffff" }}>Valor a consultar</span>
                 <input
                   type="text"
                   value={lookupValue}
                   onChange={(event) => setLookupValue(event.target.value)}
                   placeholder="Ingrese la cédula"
                   required
+                  style={{
+                    width: "100%",
+                    padding: "13px",
+                    boxSizing: "border-box",
+                    borderRadius: "10px",
+                    border: "1px solid #e7ae30",
+                    background: "#ffffff",
+                    color: "#111111",
+                  }}
                 />
               </label>
 
@@ -1037,24 +1103,48 @@ function App() {
             </form>
 
             {feedback.message ? (
-              <div className={`feedback ${feedback.type}`}>
+              <div
+                style={{
+                  marginTop: "16px",
+                  padding: "12px",
+                  borderRadius: "10px",
+                  background: "#ffffff",
+                  color: "#111111",
+                }}
+              >
                 {feedback.message}
               </div>
             ) : null}
 
             {lookupResult ? (
-              <div className="lookup-result">
-                <h4>Resultado encontrado</h4>
-                <p><strong>Cliente:</strong> {lookupResult.fullName || "No disponible"}</p>
-                <p><strong>Cédula:</strong> {lookupResult.idNumber || "No disponible"}</p>
-                <p className="assigned-result">
+              <div
+                style={{
+                  marginTop: "20px",
+                  padding: "18px",
+                  borderRadius: "14px",
+                  background: "#ffffff",
+                  color: "#111111",
+                }}
+              >
+                <h4 style={{ marginTop: 0, color: "#111111" }}>
+                  Resultado encontrado
+                </h4>
+                <p>
+                  <strong>Cliente:</strong>{" "}
+                  {lookupResult.fullName || "No disponible"}
+                </p>
+                <p>
+                  <strong>Cédula:</strong>{" "}
+                  {lookupResult.idNumber || "No disponible"}
+                </p>
+                <p style={{ fontSize: "1.2rem" }}>
                   <strong>Número asignado:</strong>{" "}
                   {lookupResult.assignedNumber || "No disponible"}
                 </p>
               </div>
             ) : null}
           </div>
-        </section>
+        </div>
       ) : null}
 
       {showAdminLogin ? (
