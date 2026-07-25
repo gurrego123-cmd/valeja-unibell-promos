@@ -770,3 +770,23 @@ h1 span {
                                                                                                 padding: 8px;
                                                                                                   }
                                                                                                   }
+/* Consulta visible sin pantalla negra */
+.lookup-modal {
+  position: static !important;
+  inset: auto !important;
+  display: block !important;
+  background: transparent !important;
+  padding: 20px 0 !important;
+  z-index: auto !important;
+}
+
+.lookup-modal .lookup-card {
+  display: block !important;
+  width: min(520px, calc(100% - 32px)) !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin: 20px auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative !important;
+}

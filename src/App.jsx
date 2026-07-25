@@ -465,7 +465,7 @@ function App() {
 
     const foundRecord = records.find((record) => {
       if (lookupType === 'idNumber') {
-        return record.idNumber === searchValue
+        return normalizeText(String(record.idNumber ?? "")) === normalizeText(String(searchValue))
       }
 
       if (lookupType === 'invoiceNumber') {
@@ -985,20 +985,36 @@ function App() {
       
       
 {showLookup ? (
-        <div className="lookup-modal" role="dialog" aria-modal="true">
-          <div className="lookup-card">
+        <section className="lookup-inline">
+          <div className="lookup-inline-card">
             <div className="lookup-header">
-              <h3>Consultar número</h3>
-              <button type="button" className="close-button" onClick={() => setShowLookup(false)}>
-                ×
+              <h3>Consultar número asignado</h3>
+              <button
+                type="button"
+                className="close-button"
+                onClick={() => {
+                  setShowLookup(false)
+                  setLookupResult(null)
+                  setLookupFeedback({ type: "info", message: "" })
+                }}
+              >
+                Cerrar
               </button>
             </div>
 
             <form className="lookup-form" onSubmit={handleLookup}>
               <label className="field">
                 <span>Buscar por</span>
-                <select value={lookupType} onChange={(event) => setLookupType(event.target.value)}>
-                  <option value="idNumber">Número de identificación</option>
+                <select
+                  value={lookupType}
+                  onChange={(event) => {
+                    setLookupType(event.target.value)
+                    setLookupValue("")
+                    setLookupResult(null)
+                    setLookupFeedback({ type: "info", message: "" })
+                  }}
+                >
+                  <option value="idNumber">Número de cédula</option>
                   <option value="invoiceNumber">Número de factura</option>
                   <option value="assignedNumber">Número asignado</option>
                 </select>
@@ -1010,33 +1026,35 @@ function App() {
                   type="text"
                   value={lookupValue}
                   onChange={(event) => setLookupValue(event.target.value)}
-                  placeholder="Ingrese la información"
+                  placeholder="Ingrese la cédula"
                   required
                 />
               </label>
 
               <button className="primary" type="submit">
-                Buscar
+                Consultar
               </button>
             </form>
+
+            {lookupFeedback.message ? (
+              <div className={`feedback ${lookupFeedback.type}`}>
+                {lookupFeedback.message}
+              </div>
+            ) : null}
 
             {lookupResult ? (
               <div className="lookup-result">
                 <h4>Resultado encontrado</h4>
-                <ul>
-                  <li><strong>Nombre completo:</strong> {lookupResult.fullName}</li>
-                  <li><strong>Identificación:</strong> {lookupResult.idNumber}</li>
-                  <li><strong>Teléfono:</strong> {lookupResult.phone}</li>
-                  <li><strong>Correo:</strong> {lookupResult.email || 'No registrado'}</li>
-                  <li><strong>Negocio:</strong> {lookupResult.business}</li>
-                  <li><strong>Factura:</strong> {lookupResult.invoiceNumber}</li>
-                  <li><strong>Valor de compra:</strong> {lookupResult.purchaseValue.toLocaleString('es-CO')} COP</li>
-                  <li><strong>Número asignado:</strong> {lookupResult.assignedNumber}</li>
-                </ul>
+                <p><strong>Cliente:</strong> {lookupResult.fullName || "No disponible"}</p>
+                <p><strong>Cédula:</strong> {lookupResult.idNumber || "No disponible"}</p>
+                <p className="assigned-result">
+                  <strong>Número asignado:</strong>{" "}
+                  {lookupResult.assignedNumber || "No disponible"}
+                </p>
               </div>
             ) : null}
           </div>
-        </div>
+        </section>
       ) : null}
 
       {showAdminLogin ? (
