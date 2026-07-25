@@ -995,7 +995,7 @@ function App() {
                 onClick={() => {
                   setShowLookup(false)
                   setLookupResult(null)
-                  setLookupFeedback({ type: "info", message: "" })
+                  setFeedback({ type: "info", message: "" })
                 }}
               >
                 Cerrar
@@ -1011,7 +1011,7 @@ function App() {
                     setLookupType(event.target.value)
                     setLookupValue("")
                     setLookupResult(null)
-                    setLookupFeedback({ type: "info", message: "" })
+                    setFeedback({ type: "info", message: "" })
                   }}
                 >
                   <option value="idNumber">Número de cédula</option>
@@ -1036,9 +1036,9 @@ function App() {
               </button>
             </form>
 
-            {lookupFeedback.message ? (
-              <div className={`feedback ${lookupFeedback.type}`}>
-                {lookupFeedback.message}
+            {feedback.message ? (
+              <div className={`feedback ${feedback.type}`}>
+                {feedback.message}
               </div>
             ) : null}
 
