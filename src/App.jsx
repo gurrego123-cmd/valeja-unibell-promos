@@ -443,9 +443,9 @@ function App() {
                                                         message: error?.message || 'No se pudo guardar el registro.',
                                                           })
                                                           }
+  }
 
-                                                          const handleLookup = (event) => {
-    }
+  const handleLookup = (event) => {
     event.preventDefault()
     const normalizedLookupValue = normalizeText(lookupValue)
 
